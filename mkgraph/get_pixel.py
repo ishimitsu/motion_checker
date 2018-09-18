@@ -21,8 +21,11 @@ def pixel_chart(environ, start_response):
     cursor.execute(sql)
     records = cursor.fetchall()
     for record in records:
-        pixel_list.append({'date':record[1].strftime("%Y-%m-%d %H:%M:%S"), 'pixel':record[0]})
-        
+        if record[0] < 75000:
+            pixel_list.append({'date':record[1].strftime("%H:%M:%S"), 'pixel':record[0]})
+        else:
+            pixel_list.append({'date':record[1].strftime("%H:%M:%S"), 'pixel':75000})
+            
     cursor.close()
     connector.close()
 
